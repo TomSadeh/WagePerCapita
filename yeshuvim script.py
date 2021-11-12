@@ -97,15 +97,25 @@ def plot_graph(item, index = False):
             else:
                 plt.annotate('+' + str(int(np.round(results.loc[period['end'], migzar + index] - 100, 0))) + '%', (period['end'] - 0.4, results.loc[period['end'], migzar + item] - 250), color = color)
     
-    plt.title(invert('שכר ריאלי לנפש בישראל ובערים שונות, 8102-3002'), fontsize = 15)
-    plt.ylabel(invert('שכר לנפש לחודש במחירי 0202'), fontsize = 12)
+    graph = dict(start = invert(str(period['start'])),
+                  end = invert(str(period['end'])))
+    
+    graph_period = graph['end'] + '-' + graph['start']
+
+    plt.title(invert('שכר ריאלי לנפש בישראל ובערים שונות, ' + graph_period), fontsize = 15)
+    if price_index == 'CPI':
+        plt.ylabel(invert('שכר לנפש לחודש במחירי 0202'), fontsize = 12)
+    else:
+        plt.ylabel(invert('שכר לנפש לחודש במחירי 5102'), fontsize = 12)
     plt.xlabel(invert('שנה'), fontsize = 12)
     plt.xticks(np.arange(period['start'] , period['end'] + 1))
     plt.yticks(yticks, ylabels)
     
-    plt.text(period['start'] - 1, - results['not_haredi' + item].max() / 5,invert('מקור: חישובים לפי קבצי הרשויות המקומיות של הלמ"ס 9102-3002'))
+    plt.text(period['start'] - 1, - results['not_haredi' + item].max() / 5,invert('מקור: חישובים לפי קבצי הרשויות המקומיות של הלמ"ס 9102-2002'))
     plt.text(period['end'], - results['not_haredi' + item].max() / 5, '@tom_sadeh')     
     plt.legend()
+
+#Plotting.
 
 #Plotting.
 plot_graph(' Real Average Wage per Capita', index = ' Real Average Wage per Capita Index')
